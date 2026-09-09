@@ -1,0 +1,26 @@
+# Entornos virtuales locales: cada desarrollador crea el suyo.
+venv/
+.venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django
+*.log
+local_settings.py
+
+# Archivos del sistema y del editor
+.vs/
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+
+# Cobertura y herramientas de pruebas
+.coverage
+htmlcov/
+.pytest_cache/

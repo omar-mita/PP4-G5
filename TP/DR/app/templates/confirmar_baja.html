@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="panel-contenido panel-confirmacion">
+    <h1>Dar de baja publicación</h1>
+
+    <p>¿Seguro que querés dar de baja la publicación de <strong>{{ animal.nombre }}</strong>?</p>
+    <p>La baja quedará registrada con su fecha para poder incluirla en los reportes.</p>
+
+    <form method="POST" class="form-confirmacion">
+        {% csrf_token %}
+        <button type="submit">Sí, dar de baja</button>
+        <a href="{% url 'mis_publicaciones' %}" class="boton-secundario">Cancelar</a>
+    </form>
+</div>
+
+{% endblock %}

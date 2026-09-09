@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="reportes-panel">
+    <div class="reportes-encabezado">
+        <h1>📊 Reportes de AdoptDog</h1>
+        <p>Indicadores generales de publicaciones, adopciones y bajas registradas en la plataforma.</p>
+    </div>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <span class="kpi-etiqueta">Publicaciones</span>
+            <strong>{{ total_publicaciones }}</strong>
+            <small>Total histórico</small>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-etiqueta">Disponibles</span>
+            <strong>{{ total_disponibles }}</strong>
+            <small>Buscando hogar</small>
+        </div>
+        <div class="kpi-card kpi-adoptados">
+            <span class="kpi-etiqueta">Adoptados</span>
+            <strong>{{ total_adoptados }}</strong>
+            <small>{{ tasa_adopcion_total }}% sobre el total</small>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-etiqueta">Bajas</span>
+            <strong>{{ total_bajas }}</strong>
+            <small>Publicaciones canceladas</small>
+        </div>
+    </div>
+
+    {% if historicos_sin_fecha %}
+    <div class="aviso-historico">
+        <strong>ℹ️ Datos históricos:</strong>
+        {{ historicos_sin_fecha }} publicación{{ historicos_sin_fecha|pluralize:"es" }} pertenece{{ historicos_sin_fecha|pluralize:"n" }} a la versión anterior y no tiene{{ historicos_sin_fecha|pluralize:"n" }} fecha de publicación registrada. Se incluye{{ historicos_sin_fecha|pluralize:"n" }} en los totales, pero no se asigna{{ historicos_sin_fecha|pluralize:"n" }} a un mes inventado.
+    </div>
+    {% endif %}
+
+    <div class="reporte-seccion">
+        <h2>Resumen mensual</h2>
+
+        {% if reporte_mensual %}
+        <div class="tabla-responsive">
+            <table class="tabla-reportes">
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Publicaciones generadas</th>
+                        <th>Perros adoptados</th>
+                        <th>Publicaciones dadas de baja</th>
+                        <th>Tasa de adopción del mes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fila in reporte_mensual %}
+                    <tr>
+                        <td><strong>{{ fila.mes }}</strong></td>
+                        <td>{{ fila.publicaciones }}</td>
+                        <td>{{ fila.adopciones }}</td>
+                        <td>{{ fila.bajas }}</td>
+                        <td>
+                            {% if fila.tasa_adopcion != None %}
+                                {{ fila.tasa_adopcion }}%
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <div class="reporte-vacio">
+                Todavía no hay movimientos con fecha para agrupar por mes. Las nuevas publicaciones, adopciones y bajas empezarán a aparecer automáticamente acá.
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="reporte-seccion">
+        <h2>Historial de publicaciones</h2>
+        <div class="tabla-responsive">
+            <table class="tabla-reportes tabla-historial">
+                <thead>
+                    <tr>
+                        <th>Perro</th>
+                        <th>Fecha de publicación</th>
+                        <th>Estado actual</th>
+                        <th>Fecha de cierre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for animal in historial %}
+                    <tr>
+                        <td><strong>{{ animal.nombre }}</strong></td>
+                        <td>
+                            {% if animal.fecha_publicacion %}
+                                {{ animal.fecha_publicacion|date:"d/m/Y H:i" }}
+                            {% else %}
+                                Histórica sin fecha
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if animal.estado == "Disponible" %}
+                                <span class="estado estado-disponible">Disponible</span>
+                            {% elif animal.estado == "Adoptado" %}
+                                <span class="estado estado-adoptado">Adoptado</span>
+                            {% else %}
+                                <span class="estado estado-baja">Dado de baja</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if animal.fecha_adopcion %}
+                                Adoptado el {{ animal.fecha_adopcion|date:"d/m/Y H:i" }}
+                            {% elif animal.fecha_baja %}
+                                Baja el {{ animal.fecha_baja|date:"d/m/Y H:i" }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No hay publicaciones registradas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

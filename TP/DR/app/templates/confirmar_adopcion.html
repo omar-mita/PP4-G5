@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="panel-contenido panel-confirmacion">
+    <h1>🐾 Confirmar adopción</h1>
+
+    <p>¿Confirmás que <strong>{{ animal.nombre }}</strong> fue adoptado?</p>
+    <p>La publicación dejará de mostrarse entre los perros disponibles y quedará registrada en el historial como adoptada.</p>
+
+    <form method="POST" class="form-confirmacion">
+        {% csrf_token %}
+        <button type="submit" class="boton-adoptado">Sí, fue adoptado</button>
+        <a href="{% url 'mis_publicaciones' %}" class="boton-secundario">Cancelar</a>
+    </form>
+</div>
+
+{% endblock %}

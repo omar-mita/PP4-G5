@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="titulo-index">
+    <h1>¡Bienvenido a AdoptDog!</h1>
+    <h2>El mejor sitio para adoptar nuevos integrantes caninos a la familia</h2>
+    <h2>Animales en adopción</h2>
+</div>
+
+<div class="animales-contenedor">
+    {% for animal in animales %}
+        <div class="animal-card">
+            <h3>{{ animal.nombre }}</h3>
+
+            {% if animal.imagen %}
+            <img src="{{ animal.imagen.url }}" alt="{{ animal.nombre }}">
+            {% endif %}
+
+            <p>{{ animal.descripcion }}</p>
+            <p>Edad: {{ animal.edad }} años</p>
+            <p>Raza: {{ animal.raza }}</p>
+            <p>Sexo: {{ animal.sexo }}</p>
+            <p>Tamaño: {{ animal.tamanio }}</p>
+            <span class="estado estado-disponible">{{ animal.estado }}</span>
+        </div>
+    {% empty %}
+        <div class="panel-contenido">
+            <p>No hay perros disponibles para adopción en este momento.</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

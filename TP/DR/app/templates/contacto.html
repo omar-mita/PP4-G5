@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="formulario-contacto">
+<div class="contacto">
+    <h2>📩 Contactanos</h2>
+
+    <p>
+        ¿Tenés dudas sobre una adopción, querés colaborar con nuestro proyecto
+        o necesitás más información sobre alguno de nuestros animales?
+        Completá el siguiente formulario y nos pondremos en contacto con vos a la brevedad.
+    </p>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <p>
+            <label for="nombre">Nombre y apellido:</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </p>
+
+        <p>
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" name="email" required>
+        </p>
+
+        <p>
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono">
+        </p>
+
+        <p>
+            <label for="asunto">Motivo de la consulta:</label>
+            <select id="asunto" name="asunto" required>
+                <option value="">Seleccionar...</option>
+                <option>Consulta sobre adopción</option>
+                <option>Quiero ofrecer tránsito</option>
+                <option>Deseo realizar una donación</option>
+                <option>Quiero ser voluntario</option>
+                <option>Otro</option>
+            </select>
+        </p>
+
+        <p>
+            <label for="mensaje">Mensaje:</label>
+            <textarea id="mensaje"
+                      name="mensaje"
+                      rows="6"
+                      placeholder="Escribí tu consulta..."
+                      required></textarea>
+        </p>
+
+        <button type="submit"> <!-- simula el envio -->
+            Enviar consulta
+        </button>
+
+    </form>
+</div>
+</div>
+
+{% endblock %}

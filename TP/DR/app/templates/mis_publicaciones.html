@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="titulo-pagina">
+    <h1>Mis publicaciones</h1>
+    <p>Administrá tus publicaciones y registrá cuando un perro encuentre un hogar.</p>
+</div>
+
+<div class="animales-contenedor">
+    {% for animal in animales %}
+    <div class="animal-card">
+        <h3>{{ animal.nombre }}</h3>
+
+        {% if animal.imagen %}
+        <img src="{{ animal.imagen.url }}" alt="{{ animal.nombre }}">
+        {% endif %}
+
+        <p>{{ animal.descripcion }}</p>
+        <p>Edad: {{ animal.edad }} años</p>
+        <p>Raza: {{ animal.raza }}</p>
+        <p>Sexo: {{ animal.sexo }}</p>
+        <p>Tamaño: {{ animal.tamanio }}</p>
+
+        {% if animal.estado == "Disponible" %}
+            <span class="estado estado-disponible">{{ animal.estado }}</span>
+        {% elif animal.estado == "Adoptado" %}
+            <span class="estado estado-adoptado">{{ animal.estado }}</span>
+        {% else %}
+            <span class="estado estado-baja">{{ animal.estado }}</span>
+        {% endif %}
+
+        <div class="fechas-publicacion">
+            {% if animal.fecha_publicacion %}
+                <small>Publicado: {{ animal.fecha_publicacion|date:"d/m/Y H:i" }}</small>
+            {% else %}
+                <small>Publicación histórica sin fecha registrada</small>
+            {% endif %}
+
+            {% if animal.fecha_adopcion %}
+                <small>Adoptado: {{ animal.fecha_adopcion|date:"d/m/Y H:i" }}</small>
+            {% endif %}
+
+            {% if animal.fecha_baja %}
+                <small>Baja: {{ animal.fecha_baja|date:"d/m/Y H:i" }}</small>
+            {% endif %}
+        </div>
+
+        {% if animal.estado == "Disponible" %}
+        <div class="acciones-publicacion">
+            <a href="{% url 'editar_publicacion' animal.id %}" class="btn-editar">
+                Editar publicación
+            </a>
+
+            <a href="{% url 'marcar_adoptado' animal.id %}" class="btn-adoptado">
+                🐾 Marcar como adoptado
+            </a>
+
+            <a href="{% url 'dar_baja_publicacion' animal.id %}" class="btn-baja">
+                Dar de baja
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    {% empty %}
+        <p>No tenés perros publicados.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

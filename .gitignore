@@ -1,0 +1,27 @@
+# Entornos virtuales locales
+venv/
+.venv/
+env/
+ENV/
+TP/DR/venv/
+TP/DR/.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django y herramientas de pruebas
+*.log
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Visual Studio / editores
+.vs/
+.vscode/
+.idea/
+
+# Archivos del sistema
+Thumbs.db
+Desktop.ini
