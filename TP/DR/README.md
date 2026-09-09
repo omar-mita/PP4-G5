@@ -1,6 +1,6 @@
 # Proyecto DR
 
-Aplicación web desarrollada con Django.
+Aplicación web desarrollada con Django. La guía principal está en [../../README.md](../../README.md) y [../../INSTALACION.md](../../INSTALACION.md).
 
 ## Ejecutar el proyecto en otra computadora
 
@@ -18,10 +18,10 @@ Aplicación web desarrollada con Django.
    .\.venv\Scripts\Activate.ps1
    ```
 
-5. Instalar las dependencias:
+5. Instalar las dependencias desde la raíz del repositorio:
 
    ```powershell
-   pip install -r requirements.txt
+   pip install -r ..\..\requirements.txt
    ```
 
 6. Iniciar la aplicación:
